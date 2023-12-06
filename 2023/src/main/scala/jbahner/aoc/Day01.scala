@@ -1,5 +1,7 @@
 package jbahner.aoc
 
+import scala.collection.mutable.LinkedHashMap
+
 def parseAndSum(arr: Array[String]) = arr
   .map(line => (line.find(_.isDigit).get, line.findLast(_.isDigit).get))
   .map((c1, c2) => c1.asDigit * 10 + c2.asDigit)
@@ -8,7 +10,15 @@ def parseAndSum(arr: Array[String]) = arr
 def part1(input: String): Int = parseAndSum(input.split("\n"))
 
 def part2(input: String): Int = {
-  val numbers = Map(
+  val numbers = LinkedHashMap(
+    "oneight" -> "18",
+    "twone" -> "21",
+    "threeight" -> "38",
+    "fiveight" -> "58",
+    "sevenine" -> "79",
+    "eightwo" -> "82",
+    "eighthree" -> "83",
+    "nineight" -> "98",
     "one" -> "1",
     "two" -> "2",
     "three" -> "3",
@@ -19,11 +29,11 @@ def part2(input: String): Int = {
     "eight" -> "8",
     "nine" -> "9"
   )
-  // TODO: Wrong order of replacements, needs to be from left to right
   parseAndSum(
-    input
+    numbers
+      .foldLeft(input)((cur, replacement) =>
+        cur.replaceAll(replacement._1, replacement._2)
+      )
       .split("\n")
-      .map(line => numbers.foldLeft(line)((a, b) => a.replaceAll(b._1, b._2)))
-      .map(f => { println(f); f })
   )
 }

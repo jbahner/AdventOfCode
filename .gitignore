@@ -2,6 +2,8 @@
 *.class
 *.log
 *~
+.bloop/
+*.worksheet.sc
 
 # sbt specific
 dist/*
