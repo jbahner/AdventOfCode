@@ -50,6 +50,16 @@ object Day02 extends AoCSolution {
       .reduce((sum, id) => sum + id)
   }
 
-  override def part2(input: String): Int = ???
+  override def part2(input: String): Int = {
+    input
+      .split("\n")
+      .map(line => parseGame(line.split(":")(1)))
+      .map(game =>
+        game.configs.maxBy(_.red).red *
+          game.configs.maxBy(_.green).green *
+          game.configs.maxBy(_.blue).blue
+      )
+      .reduce((sum, prod) => sum + prod)
+  }
 
 }
