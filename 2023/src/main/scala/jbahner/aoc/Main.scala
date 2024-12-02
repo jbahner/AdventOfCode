@@ -7,6 +7,12 @@ import scala.io.Source
 
   println(s"Day02, Part01: ${Day02.part1(loadInput("day02"))}")
   println(s"Day02, Part02: ${Day02.part2(loadInput("day02"))}")
+
+  // println(s"Day03, Part01: ${Day03.part1(loadInput("day03"))}")
+  // println(s"Day03, Part02: ${Day03.part2(loadInput("day02"))}")
+
+  println(s"Day04, Part01: ${Day04.part1(loadInput("day04"))}")
+  println(s"Day04, Part02: ${Day04.part2(loadInput("day04-test"))}")
 }
 
 def loadInput(day: String): String =

@@ -43,9 +43,7 @@ object Day02 extends AoCSolution {
         val splitted = line.split(":")
         (splitted(0).split(" ")(1).toInt, parseGame(splitted(1)))
       })
-      .filter((id, game) => {
-        println(id); game.isPossible(redMax, greenMax, blueMax)
-      })
+      .filter((id, game) => game.isPossible(redMax, greenMax, blueMax))
       .map(_._1)
       .reduce((sum, id) => sum + id)
   }
