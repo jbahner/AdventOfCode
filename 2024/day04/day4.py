@@ -1,7 +1,5 @@
 import re
-def read_file():
-    with open('input.txt') as file:
-        return [line.rstrip() for line in file]
+from util import *
 
 def directions(lines, y, x):
     x_min = max(0, x-1)
@@ -47,7 +45,7 @@ def part2(lines):
     print(sum)
 
 def main():
-    lines = read_file()
+    lines = load_input()
     part1(lines)
     part2(lines)
 

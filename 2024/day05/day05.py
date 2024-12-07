@@ -1,4 +1,5 @@
 from functools import cmp_to_key
+from util import *
 
 def read_file():
     with open('input.txt') as file:

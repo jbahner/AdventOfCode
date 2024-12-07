@@ -1,15 +1,12 @@
 from enum import Enum
 import copy
+from util import *
 
 class Direction(Enum):
     NORTH = -1, 0
     EAST = 0, 1
     SOUTH = 1, 0
     WEST = 0, -1
-
-def read_file():
-    with open('input.txt') as file:
-        return [line.rstrip() for line in file]
 
 def ninety_degrees(direction):
     if direction == Direction.NORTH:
@@ -193,7 +190,7 @@ def part2_test(lines):
 
 
 def main():
-    lines = read_file()
+    lines = load_input()
     lines = [list(arr) for arr in lines]
     # part1(lines)
     # part2(lines)
