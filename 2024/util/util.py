@@ -3,6 +3,16 @@ import os
 import urllib.request
 from dotenv import find_dotenv
 from dotenv import load_dotenv
+from enum import Enum
+
+class Direction(Enum):
+    NORTH = -1, 0
+    EAST = 0, 1
+    SOUTH = 1, 0
+    WEST = 0, -1
+
+def in_bounds(row, col, array2d):
+    return 0 <= row < len(array2d) and 0 <= col < len(array2d[row])
 
 
 def download_file(local_path):
@@ -32,6 +42,6 @@ def load_input(test=False):
     return load(path, test)
 
 
-def load_matrix(test=False):
+def load_grid(test=False):
     path = os.path.dirname((inspect.stack()[1])[1])
     return [list(line) for line in load(path, test=test)]

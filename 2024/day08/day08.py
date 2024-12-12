@@ -51,7 +51,7 @@ def part2(lines):
 
 
 def main():
-    lines = load_matrix()
+    lines = load_grid()
     part1(copy.deepcopy(lines))
     part2(lines)
 
