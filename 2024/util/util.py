@@ -5,11 +5,16 @@ from dotenv import find_dotenv
 from dotenv import load_dotenv
 from enum import Enum
 
+
 class Direction(Enum):
     NORTH = -1, 0
     EAST = 0, 1
     SOUTH = 1, 0
     WEST = 0, -1
+
+    def add(self, cell):
+        return cell[0] + self.value[0], cell[1] + self.value[1]
+
 
 def in_bounds(row, col, array2d):
     return 0 <= row < len(array2d) and 0 <= col < len(array2d[row])

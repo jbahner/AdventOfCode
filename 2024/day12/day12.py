@@ -1,10 +1,42 @@
-from util import load_grid
-from util import Direction
+from util import *
 from enum import Enum
 
+
+class Side:
+    def __init__(self, orientation, cell):
+        self.orientation = orientation
+        self.position = cell[1] if orientation == Orientation.Vertical else cell[0]
+        self.start = cell[1] if self.position == cell[0] else cell[1]
+        self.end = self.start
+
+    def __str__(self):
+        return f'orientation={self.orientation}, position={self.position} start={self.start}, end={self.end}'
+
+    def add_if(self, cell):
+        if not self.is_same_vector(cell):
+            return False
+        location = cell[0] if self.orientation == Orientation.Vertical else cell[1]
+        if location - 1 == self.end:
+            self.end = location
+            return True
+        elif location + 1 == self.start:
+            self.start = location
+            return True
+        return False
+
+    def is_same_vector(self, cell):
+        return self.position == (cell[1] if self.orientation == Orientation.Vertical else cell[0])
+
+
+
 class Orientation(Enum):
-    Vertical = 0
-    Horizontal = 1
+    Vertical = -1, 0
+    Horizontal = 0, -1
+
+    @staticmethod
+    def from_direction(direction: Direction):
+        return Orientation.Vertical if direction in [Direction.NORTH, Direction.SOUTH] else Orientation.Horizontal
+
 
 class Strategy(Enum):
     Perimeter = 0
@@ -15,6 +47,7 @@ class Strategy(Enum):
             return region.perimeter()
         else:
             return region.sides()
+
 
 def neighbors(cell1, cell2):
     if abs(cell1[0] - cell2[0]) == 1 and cell1[1] == cell2[1]:
@@ -31,7 +64,7 @@ class Region:
         self.cells = set()
 
     def __str__(self):
-        return f'id={self.identifier}, cells={', '.join([f'[{cell}]' for cell in self.cells])}'
+        return f'id={self.identifier}, cells={", ".join([f"[{cell}]" for cell in self.cells])}'
 
     def adjacent(self, row, col):
         for (r, c) in self.cells:
@@ -54,17 +87,24 @@ class Region:
         return perimeter
 
     def sides(self):
-        sides = dict()
-        for (row, col) in self.cells:
-            for cell in self.cells:
-                if cell == (row, col):
-                    continue
-                orientation = neighbors((row, col), cell)
-                if orientation == Orientation.Horizontal:
-                    ## Increment dict at col + Orientation
+        sides = set()
+        # sides = dict()
+        self.cells = sorted(self.cells, key=lambda x: (x[0], x[1]))
+        for cell in self.cells:
+            for d in Direction:
+                added = False
+                orientation = Orientation.from_direction(d)
+                for side in filter(lambda s: s.orientation == orientation, sides):
+                    if side.add_if(cell):
+                        added = True
+                if not added:
+                    sides.add(Side(orientation, cell))
+        print(self)
+        for side in sides:
+            print(side)
+        print()
+        return len(sides)
 
-                elif orientation == Orientation.Vertical:
-                    #other
 
 def assign_region(regions, id, row, col):
     adjacent_regions_with_id = [region for region in regions if region.identifier == id and region.adjacent(row, col)]
@@ -72,7 +112,7 @@ def assign_region(regions, id, row, col):
         region = Region(id)
         regions.add(region)
     elif len(adjacent_regions_with_id) > 1:
-        # Merge regions this cell connects to
+        # Merge regions this cell connects to each other
         region = adjacent_regions_with_id[0]
         for i in range(1, len(adjacent_regions_with_id)):
             region.cells.update(adjacent_regions_with_id[i].cells)
@@ -89,16 +129,20 @@ def create_regions(grid):
             assign_region(regions, grid[row][col], row, col)
     return regions
 
+
 def part1(grid):
     print(sum([r.price(Strategy.Perimeter) for r in create_regions(grid)]))
-#
-# def part2(grid):
-#     print(sum([r.price() for r in create_regions(grid)]))
 
+
+#
+def part2(grid):
+    print(sum([r.price(Strategy.Sides) for r in create_regions(grid)]))
 
 
 def main():
-    grid = load_grid()
-    part1(grid)
+    grid = load_grid(True)
+    # part1(grid)
+    part2(grid)
+
 
 main()
