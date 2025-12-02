@@ -35,7 +35,6 @@ public class InputUtil {
         LOG.info("Input file not found locally, attempting to download...");
         return downloadInput(day);
       }
-      downloadInput(day);
       try (InputStream in = Thread.currentThread()
               .getContextClassLoader()
               .getResourceAsStream(fileName);
