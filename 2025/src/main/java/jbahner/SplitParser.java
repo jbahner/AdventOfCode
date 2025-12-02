@@ -4,6 +4,11 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.function.Function;
 
+/**
+ * Parser for splitting the input string by the given delimiter pattern.
+ *
+ * @author jba
+ */
 public class SplitParser implements InputParser<List<String>> {
   private final String delimiter;
 
