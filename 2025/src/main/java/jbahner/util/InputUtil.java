@@ -26,7 +26,7 @@ public class InputUtil {
    *
    * @param day The day to read the input for
    * @return The content of the input file
-   * @throws IOException If the input file is missing or an error occurred while reading
+   * @throws InputReaderException If the input file is missing or an error occurred while reading
    */
   public static byte[] readInput(int day) throws InputReaderException {
     String fileName = String.format(FILE_FORMAT, day);

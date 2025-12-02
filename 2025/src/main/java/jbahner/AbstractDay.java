@@ -1,7 +1,5 @@
 package jbahner;
 
-import java.io.IOException;
-
 import jbahner.util.InputReaderException;
 import jbahner.util.InputUtil;
 
@@ -13,9 +11,9 @@ public abstract class AbstractDay<T> {
     this.input = parser.parse(InputUtil.readInput(day));
   }
 
-  public abstract Object part1();
+  public abstract Long part1();
 
-  public abstract Object part2();
+  public abstract Long part2();
 
   public static <D extends AbstractDay<?>> void run(Class<D> clazz) throws Exception {
     D day = clazz.getDeclaredConstructor().newInstance();

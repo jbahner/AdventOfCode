@@ -1,11 +1,10 @@
 package jbahner.day01;
 
-import java.io.IOException;
 import java.time.temporal.ValueRange;
 import java.util.List;
 
 import jbahner.AbstractDay;
-import jbahner.LineByLineParser;
+import jbahner.SplitParser;
 import jbahner.util.InputReaderException;
 
 /**
@@ -16,7 +15,7 @@ public class Day01 extends AbstractDay<List<Integer>> {
   private static final int STARTING_POSITION = 50;
 
   public Day01() throws InputReaderException {
-    super(1, new LineByLineParser().map(Day01::toIntRotations));
+    super(1, new SplitParser("\n").map(Day01::toIntRotations));
   }
 
   private static List<Integer> toIntRotations(List<String> lines) {
@@ -31,18 +30,18 @@ public class Day01 extends AbstractDay<List<Integer>> {
   }
 
   @Override
-  public Object part1() {
+  public Long part1() {
     int cur = STARTING_POSITION;
     int result = 0;
     for (int rotation : input) {
       cur = Math.floorMod(cur + rotation, 100);
       if (cur == 0) result++;
     }
-    return result;
+    return (long) result;
   }
 
   @Override
-  public Object part2() {
+  public Long part2() {
     ValueRange valueRange = ValueRange.of(1, 99);
     int cur = STARTING_POSITION;
     int result = 0;
@@ -53,6 +52,6 @@ public class Day01 extends AbstractDay<List<Integer>> {
       int fullRotations = Math.abs(rotation) / 100;
       result += fullRotations;
     }
-    return result;
+    return (long) result;
   }
 }

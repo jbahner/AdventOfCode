@@ -1,18 +1,16 @@
-package jbahner.day01;
+package jbahner;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 import org.junit.jupiter.api.Test;
 
-import jbahner.AbstractDay;
-
 public abstract class AbstractDayTest<D extends AbstractDay<?>> {
 
   private final Class<D> clazz;
-  private final Object expectedPart1;
-  private final Object expectedPart2;
+  private final Long expectedPart1;
+  private final Long expectedPart2;
 
-  protected AbstractDayTest(Class<D> clazz, Object expectedPart1, Object expectedPart2) throws Exception{
+  protected AbstractDayTest(Class<D> clazz, Long expectedPart1, Long expectedPart2) {
     this.clazz = clazz;
     this.expectedPart1 = expectedPart1;
     this.expectedPart2 = expectedPart2;
